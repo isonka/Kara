@@ -35,6 +35,21 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK', message: 'Server is running' });
 });
 
+// Database connection test endpoint
+app.get('/db-test', async (req, res) => {
+  try {
+    const mongoose = require('mongoose');
+    const isConnected = mongoose.connection.readyState === 1;
+    res.json({ 
+      database: isConnected ? 'Connected' : 'Disconnected',
+      readyState: mongoose.connection.readyState,
+      host: mongoose.connection.host || 'Not connected'
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 app.use('/api/suppliers', suppliersRouter);
 
 const PORT = process.env.PORT || 3001;
