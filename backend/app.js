@@ -18,6 +18,18 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
+// Root endpoint
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Kara Backend API', 
+    version: '1.0.0',
+    endpoints: {
+      health: '/health',
+      suppliers: '/api/suppliers'
+    }
+  });
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK', message: 'Server is running' });
