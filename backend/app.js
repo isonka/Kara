@@ -6,8 +6,22 @@ require('./config/db');
 const suppliersRouter = require('./routes/suppliers');
 
 const app = express();
-app.use(cors());
+
+// Configure CORS for production
+const corsOptions = {
+  origin: process.env.NODE_ENV === 'production' 
+    ? ['https://your-frontend-domain.onrender.com'] // Replace with your actual frontend URL
+    : ['http://localhost:3000', 'http://localhost:3001'],
+  credentials: true
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
+
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'OK', message: 'Server is running' });
+});
 
 app.use('/api/suppliers', suppliersRouter);
 
