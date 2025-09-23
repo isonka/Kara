@@ -1,0 +1,27 @@
+{
+    "order_type": "csv",
+    "name": "Efe Horeca",
+    "email": "info@efe-horeca.com",
+    "phone": "+31 20 261 00 00",
+    "address": "Edisonstraat 10, 1114 AE, Duivendrecht, Netherlands",
+    "website": "https://www.efe-horeca.com",
+    "products_url": "https://www.efe-horeca.com/catalogus",
+    "currency": "EUR",
+    "timezone": "Europe/Amsterdam",
+    "language": "nl",
+    "comment": "Efe Horeca is a leading supplier of food and beverages for the hospitality industry in the Netherlands. They offer a wide range of products including fresh produce, dairy, meat",
+    "logo": "https://www.efe-horeca.com/logo.png",
+    "categories": [
+        "Beverages",
+        "Dairy Products",
+        "Meat & Poultry",
+        "Seafood",
+        "Fresh Produce",
+        "Bakery Items",
+        "Frozen Foods",
+        "Snacks & Confectionery",
+        "Condiments & Sauces",
+        "Dry Goods & Pasta"
+    ],
+    "order_example": "https://www.efe-horeca.com/order_example.csv"
+}
