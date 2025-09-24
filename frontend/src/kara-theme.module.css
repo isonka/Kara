@@ -1,0 +1,237 @@
+/* kara-theme.module.css */
+
+/* === Variables === */
+:root {
+  --color-primary: #FF6B00;
+  --color-secondary: #2E2E2E;
+  --color-background: #F4F4F4;
+  --color-surface: #FFFFFF;
+  --color-border: #E0E0E0;
+  --color-text: #1A1A1A;
+  --color-muted: #6E6E6E;
+  --color-error: #D32F2F;
+  --radius: 12px;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --font: 'Inter', sans-serif;
+}
+
+/* === Base Styles === */
+body {
+  font-family: var(--font);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  margin: 0;
+  padding: 0;
+}
+
+/* === Layout === */
+.container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* === Cards === */
+.card {
+  background-color: var(--color-surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 32px;
+  margin-bottom: 32px;
+}
+
+/* === Headings === */
+.heading {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  color: var(--color-text);
+}
+
+/* === Membership Form === */
+.membership-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.membership-form input,
+.membership-form select {
+  padding: 14px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font-size: 16px;
+  background-color: var(--color-surface);
+  transition: border-color 0.2s ease;
+}
+
+.membership-form input:focus,
+.membership-form select:focus {
+  border-color: var(--color-primary);
+  outline: none;
+}
+
+/* === Floating Label Form === */
+.form-group {
+  position: relative;
+  margin-bottom: 24px;
+  flex: 1 1 240px;
+  width: 100%;
+  /* Ensure all children take full width */
+}
+
+.form-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 16px 12px 12px;
+  font-size: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background-color: var(--color-surface);
+  transition: border-color 0.2s ease;
+}
+
+.form-input:focus {
+  border-color: var(--color-primary);
+  outline: none;
+}
+
+.form-label {
+  position: absolute;
+  top: 16px;
+  left: 12px;
+  font-size: 16px;
+  color: var(--color-muted);
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+
+.form-input:focus + .form-label,
+.form-input:not(:placeholder-shown) + .form-label {
+  top: 4px;
+  left: 12px;
+  font-size: 12px;
+  color: var(--color-primary);
+}
+
+/* For select dropdowns */
+select.form-input {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%236E6E6E' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 12px;
+}
+
+/* === Buttons === */
+.button {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 14px 24px;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.button:hover {
+  background-color: #e65c00;
+}
+
+.button-secondary {
+  background-color: var(--color-secondary);
+}
+
+/* === Error Message === */
+.alert-error {
+  background-color: #FFEBEE;
+  color: var(--color-error);
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+/* === Table Styling === */
+.membership-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--color-surface);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.membership-table th,
+.membership-table td {
+  padding: 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.membership-table th {
+  background-color: var(--color-background);
+  font-weight: 600;
+  color: var(--color-muted);
+}
+
+.membership-table tr:nth-child(even) {
+  background-color: #FAFAFA;
+}
+
+.membership-table tr:hover {
+  background-color: #F0F0F0;
+}
+
+/* === Modal === */
+.modal-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(44,44,44,0.25);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  /* Increased padding to screen edges for better spacing */
+}
+.modal-content {
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 32px 24px;
+  min-width: 320px;
+  max-width: 95vw;
+  width: 400px;
+  position: relative;
+  z-index: 1001;
+  max-height: 80vh;
+  overflow-y: auto;
+  /* Make modal scrollable if content overflows */
+}
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--color-muted);
+  cursor: pointer;
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  .membership-form {
+    grid-template-columns: 1fr;
+  }
+
+  .membership-table th,
+  .membership-table td {
+    font-size: 14px;
+    padding: 12px;
+  }
+}

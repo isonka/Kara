@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getMemberships, createMembership } from '../services/membershipService';
+import colors from '../colors';
+import styles from '../kara-theme.module.css';
 
 const Memberships = () => {
   const [memberships, setMemberships] = useState([]);
@@ -16,6 +18,7 @@ const Memberships = () => {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     fetchMemberships();
@@ -58,34 +61,75 @@ const Memberships = () => {
     }
   };
 
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
+
   return (
-    <div>
-      <h2>Memberships</h2>
-      {error && <div style={{ color: 'red' }}>{error}</div>}
-      <form onSubmit={handleSubmit} style={{ marginBottom: 24 }}>
-        <input name="business_name" placeholder="Business Name" value={form.business_name} onChange={handleChange} required />
-        <select name="business_type" value={form.business_type} onChange={handleChange} required>
-          <option value="restaurant">Restaurant</option>
-          <option value="hotel">Hotel</option>
-          <option value="other">Other</option>
-        </select>
-        <input name="contact_name" placeholder="Contact Name" value={form.contact_name} onChange={handleChange} required />
-        <input name="email" placeholder="Email" value={form.email} onChange={handleChange} required />
-        <input name="phone" placeholder="Phone" value={form.phone} onChange={handleChange} />
-        <input name="address" placeholder="Address" value={form.address} onChange={handleChange} />
-        <input name="website" placeholder="Website" value={form.website} onChange={handleChange} />
-        <select name="subscription_plan" value={form.subscription_plan} onChange={handleChange} required>
-          <option value="basic">Basic</option>
-          <option value="premium">Premium</option>
-          <option value="enterprise">Enterprise</option>
-        </select>
-        <input name="notes" placeholder="Notes" value={form.notes} onChange={handleChange} />
-        <button type="submit">Add Membership</button>
-      </form>
+    <div className={styles.card}>
+      <h2 className={styles.heading}>Memberships</h2>
+      <button className={styles.button} style={{marginBottom: 24}} onClick={openModal}>Add Membership</button>
+      {modalOpen && (
+        <div className={styles['modal-backdrop']} onClick={closeModal}>
+          <div className={styles['modal-content']} onClick={e => e.stopPropagation()}>
+            <button className={styles['modal-close']} onClick={closeModal} aria-label="Close">&times;</button>
+            <h3 className={styles.heading} style={{fontSize: 22, marginBottom: 20}}>Add Membership</h3>
+            <form onSubmit={async (e) => { await handleSubmit(e); closeModal(); }} className={styles['membership-form']} autoComplete="off">
+              <div className={styles['form-group']}>
+                <input name="business_name" className={styles['form-input']} placeholder=" " value={form.business_name} onChange={handleChange} required />
+                <label className={styles['form-label']}>Business Name</label>
+              </div>
+              <div className={styles['form-group']}>
+                <select name="business_type" className={styles['form-input']} value={form.business_type} onChange={handleChange} required>
+                  <option value="" disabled hidden></option>
+                  <option value="restaurant">Restaurant</option>
+                  <option value="hotel">Hotel</option>
+                  <option value="other">Other</option>
+                </select>
+                <label className={styles['form-label']}>Business Type</label>
+              </div>
+              <div className={styles['form-group']}>
+                <input name="contact_name" className={styles['form-input']} placeholder=" " value={form.contact_name} onChange={handleChange} required />
+                <label className={styles['form-label']}>Contact Name</label>
+              </div>
+              <div className={styles['form-group']}>
+                <input name="email" className={styles['form-input']} placeholder=" " value={form.email} onChange={handleChange} required />
+                <label className={styles['form-label']}>Email</label>
+              </div>
+              <div className={styles['form-group']}>
+                <input name="phone" className={styles['form-input']} placeholder=" " value={form.phone} onChange={handleChange} />
+                <label className={styles['form-label']}>Phone</label>
+              </div>
+              <div className={styles['form-group']}>
+                <input name="address" className={styles['form-input']} placeholder=" " value={form.address} onChange={handleChange} />
+                <label className={styles['form-label']}>Address</label>
+              </div>
+              <div className={styles['form-group']}>
+                <input name="website" className={styles['form-input']} placeholder=" " value={form.website} onChange={handleChange} />
+                <label className={styles['form-label']}>Website</label>
+              </div>
+              <div className={styles['form-group']}>
+                <select name="subscription_plan" className={styles['form-input']} value={form.subscription_plan} onChange={handleChange} required>
+                  <option value="" disabled hidden></option>
+                  <option value="basic">Basic</option>
+                  <option value="premium">Premium</option>
+                  <option value="enterprise">Enterprise</option>
+                </select>
+                <label className={styles['form-label']}>Subscription Plan</label>
+              </div>
+              <div className={styles['form-group']}>
+                <input name="notes" className={styles['form-input']} placeholder=" " value={form.notes} onChange={handleChange} />
+                <label className={styles['form-label']}>Notes</label>
+              </div>
+              <button className={styles.button} type="submit" style={{marginTop: 8}}>Add</button>
+            </form>
+          </div>
+        </div>
+      )}
+      {error && <div className={styles['alert-error']}>{error}</div>}
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <table border="1" cellPadding="8">
+        <table className={styles['membership-table']}>
           <thead>
             <tr>
               <th>Business Name</th>
