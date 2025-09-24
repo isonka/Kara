@@ -8,15 +8,16 @@ const membershipsRouter = require('./routes/memberships');
 
 const app = express();
 
-// Configure CORS for production
-const corsOptions = {
-  origin: process.env.NODE_ENV === 'production' 
-    ? ['https://your-frontend-domain.onrender.com'] // Replace with your actual frontend URL
-    : ['http://localhost:3000', 'http://localhost:3001'],
-  credentials: true
-};
+// --- ENVIRONMENT LOGGING FOR CI/CD ---
+console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('API ENV:', process.env.API_ENV);
+console.log('Frontend Origin:', process.env.FRONTEND_ORIGIN);
 
-app.use(cors(corsOptions));
+// --- UNIVERSAL CORS FOR DEBUGGING ---
+app.use(cors({
+  origin: true,
+  credentials: true
+}));
 app.use(express.json());
 
 // Root endpoint
