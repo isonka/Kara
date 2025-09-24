@@ -5,6 +5,7 @@ require('./config/db');
 
 const suppliersRouter = require('./routes/suppliers');
 const membershipsRouter = require('./routes/memberships');
+const authRouter = require('./routes/auth');
 
 const app = express();
 
@@ -54,6 +55,7 @@ app.get('/db-test', async (req, res) => {
 
 app.use('/api/suppliers', suppliersRouter);
 app.use('/api/memberships', membershipsRouter);
+app.use('/api/auth', authRouter);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

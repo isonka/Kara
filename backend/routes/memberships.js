@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const Membership = require('../models/Membership');
+const { requireAuth, requireAdmin } = require('../middleware/auth');
+
+// Protect all membership routes (admin only)
+router.use(requireAuth, requireAdmin);
 
 // Create a new membership
 router.post('/', async (req, res) => {
