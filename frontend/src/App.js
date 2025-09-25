@@ -3,10 +3,13 @@ import './App.css';
 import styles from './kara-theme.module.css';
 import Memberships from './components/Memberships';
 import Login from './components/Login';
+import ForgotPassword from './components/ForgotPassword';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   const [token, setToken] = useState(() => localStorage.getItem('token'));
   const [role, setRole] = useState(() => localStorage.getItem('role'));
+  const [authScreen, setAuthScreen] = useState('login'); // login | forgot | renew
 
   const handleLogin = (jwt, userRole) => {
     setToken(jwt);
@@ -23,7 +26,8 @@ function App() {
   };
 
   if (!token) {
-    return <Login onLogin={handleLogin} />;
+    if (authScreen === 'forgot') return <ForgotPassword onBack={() => setAuthScreen('login')} />;
+    return <Login onLogin={handleLogin} onForgot={() => setAuthScreen('forgot')} />;
   }
 
   if (role === 'admin') {
@@ -31,19 +35,22 @@ function App() {
       <div className={styles.container}>
         <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
           <h1 className={styles.heading}>Kara Membership Management</h1>
-          <button className={styles.button} onClick={handleLogout}>Logout</button>
-        </div>
-        <Memberships />
+          <div>
+            <button className={styles.button} style={{marginRight: 8}} onClick={() => setAuthScreen('renew')}>Change Password</button>
+            <button className={styles.button} onClick={handleLogout}>Logout</button>
+          </div>
+        </div>        
       </div>
     );
   }
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.heading}>Welcome to Kara</h1>
-      <p>You are logged in as a user. Membership management is for admins only.</p>
-      <button className={styles.button} onClick={handleLogout}>Logout</button>
-    </div>
+    <>
+      <Dashboard />
+      <div style={{textAlign:'right', marginTop: 16}}>
+        <button className={styles.button} onClick={handleLogout}>Logout</button>
+      </div>
+    </>
   );
 }
 

@@ -4,7 +4,7 @@ import styles from '../kara-theme.module.css';
 
 const API_URL = process.env.REACT_APP_API_URL || 'https://kara-agcc.onrender.com';
 
-const Login = ({ onLogin }) => {
+const Login = ({ onLogin, onForgot }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -52,7 +52,10 @@ const Login = ({ onLogin }) => {
           />
           <label className={styles['form-label']}>Password</label>
         </div>
-        <button className={styles.button} type="submit" disabled={loading} style={{marginTop: 8}}>
+        <div style={{ marginBottom: 8, display: 'flex', justifyContent: 'flex-end' }}>
+          <button type="button" className={styles['text-link']} onClick={onForgot}>Forgot Password?</button>
+        </div>
+        <button className={styles.button} type="submit" disabled={loading} style={{ marginTop: 8 }}>
           {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>

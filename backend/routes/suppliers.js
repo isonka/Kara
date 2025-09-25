@@ -13,10 +13,12 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Get all suppliers
-router.get('/', async (req, res) => {
+const { requireAuth } = require('../middleware/auth');
+
+// Get all suppliers for logged-in user
+router.get('/', requireAuth, async (req, res) => {
   try {
-    const suppliers = await Supplier.find();
+    const suppliers = await Supplier.find({ user: req.user._id });
     res.json(suppliers);
   } catch (err) {
     res.status(500).json({ error: err.message });

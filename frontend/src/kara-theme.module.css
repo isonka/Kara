@@ -1,3 +1,36 @@
+/* Mobile-first back arrow button for ForgotPassword */
+.back-arrow-btn {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 0;
+  margin-bottom: 16px;
+  cursor: pointer;
+}
+
+.back-arrow {
+  font-size: 1.7rem;
+  color: #333;
+  line-height: 1;
+}
+
+@media (max-width: 600px) {
+  .card {
+    margin: 24px 0 0 0;
+    border-radius: 0;
+    min-height: 100vh;
+    box-shadow: none;
+    padding: 16px;
+  }
+  .back-arrow-btn {
+    margin-bottom: 12px;
+    font-size: 1.1rem;
+  }
+  .back-arrow {
+    font-size: 1.3rem;
+  }
+/* media query ends */
 /* kara-theme.module.css */
 
 /* === Variables === */
@@ -33,11 +66,42 @@ body {
 
 /* === Cards === */
 .card {
-  background-color: var(--color-surface);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 32px;
-  margin-bottom: 32px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 16px 0 rgba(0,0,0,0.08);
+  padding: 32px 28px;
+  margin: 40px auto;
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+body, #root, .app-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 600px) {
+  .card {
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0 8px;
+    margin: 0;
+    width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
 }
 
 /* === Headings === */
@@ -56,15 +120,6 @@ body {
   margin-bottom: 32px;
 }
 
-.membership-form input,
-.membership-form select {
-  padding: 14px 16px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  font-size: 16px;
-  background-color: var(--color-surface);
-  transition: border-color 0.2s ease;
-}
 
 .membership-form input:focus,
 .membership-form select:focus {
@@ -81,19 +136,21 @@ body {
   /* Ensure all children take full width */
 }
 
+
 .form-input {
   width: 100%;
   box-sizing: border-box;
-  padding: 16px 12px 12px;
+  padding: 14px 12px 12px;
   font-size: 16px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  background-color: var(--color-surface);
+  border: 1.5px solid #BDBDBD;
+  border-radius: 10px;
+  background-color: #fff;
+  color: #1A1A1A;
   transition: border-color 0.2s ease;
 }
 
 .form-input:focus {
-  border-color: var(--color-primary);
+  border-color: #FF6B00;
   outline: none;
 }
 
@@ -125,16 +182,25 @@ select.form-input {
 }
 
 /* === Buttons === */
+
 .button {
-  background-color: var(--color-primary);
-  color: white;
-  border: none;
-  padding: 14px 24px;
-  border-radius: var(--radius);
+  background-color: #FF6B00;
+  color: #fff;
   font-weight: 600;
-  font-size: 16px;
+  border: none;
+  border-radius: var(--radius);
+  padding: 12px 0;
+  width: 100%;
+  font-size: 1rem;
   cursor: pointer;
+  margin-top: 8px;
+  margin-bottom: 8px;
   transition: background 0.3s ease;
+  box-shadow: none;
+}
+
+.form-input:focus {
+  border-color: var(--color-primary) !important;
 }
 
 .button:hover {
@@ -234,4 +300,20 @@ select.form-input {
     font-size: 14px;
     padding: 12px;
   }
+}
+
+.text-link {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+  margin: 0 8px 0 0;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+.text-link:hover {
+  color: #e65c00;
 }
