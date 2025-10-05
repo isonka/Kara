@@ -5,6 +5,8 @@ import Memberships from './components/Memberships';
 import Login from './components/Login';
 import ForgotPassword from './components/ForgotPassword';
 import Dashboard from './pages/Dashboard';
+import Suppliers from './pages/Suppliers';
+import { Routes, Route } from 'react-router-dom';
 
 function App() {
   const [token, setToken] = useState(() => localStorage.getItem('token'));
@@ -46,7 +48,10 @@ function App() {
 
   return (
     <>
-      <Dashboard />
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/suppliers" element={<Suppliers />} />
+      </Routes>
       <div style={{textAlign:'right', marginTop: 16}}>
         <button className={styles.button} onClick={handleLogout}>Logout</button>
       </div>

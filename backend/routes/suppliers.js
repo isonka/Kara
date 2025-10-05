@@ -18,7 +18,9 @@ const { requireAuth } = require('../middleware/auth');
 // Get all suppliers for logged-in user
 router.get('/', requireAuth, async (req, res) => {
   try {
-    const suppliers = await Supplier.find({ user: req.user._id });
+    // The JWT token has userId, not _id
+    const userId = req.user.userId || req.user._id;
+    const suppliers = await Supplier.find({ user: userId });
     res.json(suppliers);
   } catch (err) {
     res.status(500).json({ error: err.message });

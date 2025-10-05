@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { getSuppliers } from '../services/supplierService';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api/suppliers';
+const API_URL = process.env.REACT_APP_API_URL || 'https://kara-agcc.onrender.com/api/suppliers';
 const ORDER_TYPES = ['csv', 'pdf', 'xls', 'email', 'phone', 'custom'];
 
 export default function Suppliers() {
@@ -33,10 +34,22 @@ export default function Suppliers() {
   const fetchSuppliers = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(API_URL);
-      setSuppliers(res.data);
+      const token = localStorage.getItem('token');
+      
+      if (!token) {
+        setError('No authentication token found');
+        setLoading(false);
+        return;
+      }
+      
+      const data = await getSuppliers(token);
+      setSuppliers(Array.isArray(data) ? data : []);
+      setError('');
+      
     } catch (err) {
+      console.error('Error fetching suppliers:', err);
       setError('Failed to fetch suppliers');
+      setSuppliers([]); // Reset to empty array on error
     }
     setLoading(false);
   };
@@ -54,6 +67,7 @@ export default function Suppliers() {
     setLoading(true);
     setError('');
     try {
+      fetchSuppliers();
       let dataToSend = { ...form };
       // Convert categories from comma-separated string to array
       if (form.categories) {
@@ -69,7 +83,7 @@ export default function Suppliers() {
         order_type: '', name: '', email: '', phone: '', address: '', website: '', products_url: '', currency: '', timezone: '', language: '', comment: '', logo: '', categories: '', order_example: ''
       });
       setOrderExampleFile(null);
-      fetchSuppliers();
+      
     } catch (err) {
       setError('Failed to add supplier');
     }
@@ -107,14 +121,18 @@ export default function Suppliers() {
         <div>Loading...</div>
       ) : (
         <ul>
-          {suppliers.map((s) => (
-            <li key={s._id}>
-              <b>{s.name}</b> ({s.email}) - {s.order_type} <br />
-              {s.address} <br />
-              {s.website && <a href={s.website} target="_blank" rel="noopener noreferrer">Website</a>}<br />
-              {s.categories && s.categories.join(', ')}
-            </li>
-          ))}
+          {Array.isArray(suppliers) && suppliers.length > 0 ? (
+            suppliers.map((s) => (
+              <li key={s._id}>
+                <b>{s.name}</b> ({s.email}) - {s.order_type} <br />
+                {s.address} <br />
+                {s.website && <a href={s.website} target="_blank" rel="noopener noreferrer">Website</a>}<br />
+                {s.categories && s.categories.join(', ')}
+              </li>
+            ))
+          ) : (
+            <div>No suppliers found.</div>
+          )}
         </ul>
       )}
     </div>
