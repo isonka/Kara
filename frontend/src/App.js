@@ -6,6 +6,9 @@ import Login from './components/Login';
 import ForgotPassword from './components/ForgotPassword';
 import Dashboard from './pages/Dashboard';
 import Suppliers from './pages/Suppliers';
+import Ingredients from './components/Ingredients';
+import Recipes from './components/Recipes';
+import RecipeCreator from './components/RecipeCreator';
 import { Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -51,6 +54,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/suppliers" element={<Suppliers />} />
+        <Route path="/ingredients" element={<Ingredients />} />
+        <Route path="/recipes" element={<Recipes />} />
+        <Route path="/recipes/create" element={<RecipeCreator />} />
+        <Route path="/recipes/edit/:id" element={<RecipeCreator />} />
       </Routes>
       <div style={{textAlign:'right', marginTop: 16}}>
         <button className={styles.button} onClick={handleLogout}>Logout</button>

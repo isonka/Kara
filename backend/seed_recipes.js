@@ -31,10 +31,6 @@ async function seedRecipes() {
       name: 'Classic Margherita Pizza',
       description: 'Traditional Italian pizza with fresh basil and tomatoes',
       category: 'Main Course',
-      cuisine: 'Italian',
-      servings: 4,
-      prep_time_minutes: 20,
-      cook_time_minutes: 15,
       difficulty: 'Medium',
       ingredients: [
         { 
@@ -84,23 +80,12 @@ async function seedRecipes() {
         }
       ],
       tags: ['vegetarian', 'classic', 'popular'],
-      allergens: ['gluten'],
-      spice_level: 'None',
-      nutritional_info: {
-        calories_per_serving: 280,
-        protein_grams: 12,
-        carbs_grams: 35,
-        fat_grams: 8
-      }
+      allergens: ['gluten']
     },
     {
       name: 'Italian Sausage Pasta',
       description: 'Hearty pasta with Italian sausage, peppers, and onions',
       category: 'Main Course',
-      cuisine: 'Italian',
-      servings: 6,
-      prep_time_minutes: 15,
-      cook_time_minutes: 25,
       difficulty: 'Easy',
       ingredients: [
         { 
@@ -156,23 +141,12 @@ async function seedRecipes() {
         }
       ],
       tags: ['hearty', 'comfort-food', 'popular'],
-      allergens: ['gluten'],
-      spice_level: 'Mild',
-      nutritional_info: {
-        calories_per_serving: 420,
-        protein_grams: 22,
-        carbs_grams: 28,
-        fat_grams: 24
-      }
+      allergens: ['gluten']
     },
     {
       name: 'Classic Chicken Burger',
       description: 'Juicy grilled chicken breast burger with fresh vegetables',
       category: 'Main Course',
-      cuisine: 'American',
-      servings: 4,
-      prep_time_minutes: 10,
-      cook_time_minutes: 15,
       difficulty: 'Easy',
       ingredients: [
         { 
@@ -222,14 +196,7 @@ async function seedRecipes() {
         }
       ],
       tags: ['grilled', 'healthy', 'popular'],
-      allergens: ['gluten'],
-      spice_level: 'None',
-      nutritional_info: {
-        calories_per_serving: 350,
-        protein_grams: 35,
-        carbs_grams: 25,
-        fat_grams: 12
-      }
+      allergens: ['gluten']
     }
   ];
 

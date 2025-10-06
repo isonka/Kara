@@ -8,51 +8,35 @@ const RecipeIngredientSchema = new mongoose.Schema({
 }, { _id: false });
 
 const RecipeStepSchema = new mongoose.Schema({
-  step_number: { type: Number, required: true },
-  instruction: { type: String, required: true },
-  time_minutes: { type: Number }, // Optional cooking/prep time for this step
-  temperature: { type: String }, // e.g., "350°F", "medium heat"
-  equipment: [{ type: String }] // e.g., ["oven", "mixing bowl"]
+  step: { type: Number, required: true },
+  description: { type: String, required: true },
+  time_minutes: { type: Number } // Optional time for this step
 }, { _id: false });
 
 const RecipeSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   name: { type: String, required: true },
   description: { type: String },
-  category: { type: String }, // e.g., 'Appetizer', 'Main Course', 'Dessert'
-  cuisine_type: { type: String }, // e.g., 'Italian', 'Asian', 'American'
-  difficulty_level: { type: String, enum: ['Easy', 'Medium', 'Hard'], default: 'Medium' },
-  prep_time_minutes: { type: Number },
-  cook_time_minutes: { type: Number },
-  total_time_minutes: { type: Number },
-  servings: { type: Number, default: 4 },
+  category: { type: String, required: true }, // e.g., 'Appetizer', 'Main Course', 'Dessert'
+  difficulty: { type: String, enum: ['Easy', 'Medium', 'Hard'], required: true },
   
   // Ingredients with quantities
   ingredients: [RecipeIngredientSchema],
   
-  // Step-by-step instructions
-  steps: [RecipeStepSchema],
+  // Step-by-step instructions  
+  instructions: [RecipeStepSchema],
   
   // Additional metadata
-  tags: [{ type: String }], // e.g., ['vegetarian', 'gluten-free', 'spicy']
-  image_url: { type: String },
-  video_url: { type: String },
-  source: { type: String }, // Where the recipe came from
-  
-  // Nutritional info (optional)
-  calories_per_serving: { type: Number },
-  protein_grams: { type: Number },
-  carbs_grams: { type: Number },
-  fat_grams: { type: Number },
+  tags: [{ type: String }], // e.g., ['vegetarian', 'gluten-free', 'popular']
+  allergens: [{ type: String }], // e.g., ['gluten', 'dairy', 'nuts']
   
   // Business info
   cost_per_serving: { type: Number }, // Calculated from ingredient costs
-  selling_price: { type: Number },
-  profit_margin: { type: Number },
+  total_cost: { type: Number }, // Total recipe cost
+  cost_calculated: { type: Boolean, default: false },
   
   // Status
-  is_active: { type: Boolean, default: true },
-  is_featured: { type: Boolean, default: false },
+  status: { type: String, enum: ['active', 'inactive', 'draft'], default: 'active' },
   notes: { type: String }
 }, {
   timestamps: true
