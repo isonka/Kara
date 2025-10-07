@@ -13,7 +13,40 @@ const MembershipSchema = new mongoose.Schema({
   payment_token: { type: String }, // Store only tokenized payment info
   date_joined: { type: Date, default: Date.now },
   last_payment_date: { type: Date },
-  notes: { type: String }
+  trial_ends: { type: Date },
+  subscription_expires: { type: Date },
+  notes: { type: String },
+  // User limits based on subscription
+  userLimits: {
+    basic: { type: Number, default: 1 },
+    premium: { type: Number, default: 5 },
+    enterprise: { type: Number, default: -1 } // -1 means unlimited
+  },
+  // Settings
+  settings: {
+    allowTeamChangeRequests: { type: Boolean, default: true },
+    allowTeamOrderRequests: { type: Boolean, default: true },
+    requireApprovalForOrders: { type: Boolean, default: true },
+    requireApprovalForChanges: { type: Boolean, default: true }
+  }
 });
+
+// Method to get current user limit
+MembershipSchema.methods.getCurrentUserLimit = function() {
+  return this.userLimits[this.subscription_plan] || 1;
+};
+
+// Method to check if subscription is active
+MembershipSchema.methods.isSubscriptionActive = function() {
+  if (this.subscription_status === 'cancelled' || this.subscription_status === 'expired') {
+    return false;
+  }
+  
+  if (this.subscription_status === 'trial') {
+    return !this.trial_ends || this.trial_ends > new Date();
+  }
+  
+  return !this.subscription_expires || this.subscription_expires > new Date();
+};
 
 module.exports = mongoose.model('Membership', MembershipSchema);

@@ -8,6 +8,8 @@ const membershipsRouter = require('./routes/memberships');
 const authRouter = require('./routes/auth');
 const ingredientsRouter = require('./routes/ingredients');
 const recipesRouter = require('./routes/recipes');
+const usersRouter = require('./routes/users');
+const teamRouter = require('./routes/team');
 
 const app = express();
 
@@ -60,6 +62,8 @@ app.use('/api/memberships', membershipsRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/ingredients', ingredientsRouter);
 app.use('/api/recipes', recipesRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/team', teamRouter);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
