@@ -52,7 +52,7 @@ router.get('/team', auth.requireAuth, requireRootAdmin, async (req, res) => {
 });
 
 // Invite a new team member
-router.post('/invite', auth, requireRootAdmin, async (req, res) => {
+router.post('/invite', auth.requireAuth, requireRootAdmin, async (req, res) => {
   try {
     const { email, firstName, lastName, permissions } = req.body;
 
@@ -112,7 +112,7 @@ router.post('/invite', auth, requireRootAdmin, async (req, res) => {
 });
 
 // Update team member permissions
-router.put('/team/:userId/permissions', auth, requireRootAdmin, async (req, res) => {
+router.put('/team/:userId/permissions', auth.requireAuth, requireRootAdmin, async (req, res) => {
   try {
     const { userId } = req.params;
     const { permissions } = req.body;
@@ -153,7 +153,7 @@ router.put('/team/:userId/permissions', auth, requireRootAdmin, async (req, res)
 });
 
 // Deactivate team member
-router.put('/team/:userId/deactivate', auth, requireRootAdmin, async (req, res) => {
+router.put('/team/:userId/deactivate', auth.requireAuth, requireRootAdmin, async (req, res) => {
   try {
     const { userId } = req.params;
 
@@ -178,7 +178,7 @@ router.put('/team/:userId/deactivate', auth, requireRootAdmin, async (req, res) 
 });
 
 // Get change requests (for root admin)
-router.get('/change-requests', auth, requireRootAdmin, async (req, res) => {
+router.get('/change-requests', auth.requireAuth, requireRootAdmin, async (req, res) => {
   try {
     const { status = 'pending' } = req.query;
     
@@ -199,7 +199,7 @@ router.get('/change-requests', auth, requireRootAdmin, async (req, res) => {
 });
 
 // Get order requests (for root admin)
-router.get('/order-requests', auth, requireRootAdmin, async (req, res) => {
+router.get('/order-requests', auth.requireAuth, requireRootAdmin, async (req, res) => {
   try {
     const { status = 'pending' } = req.query;
     
@@ -221,7 +221,7 @@ router.get('/order-requests', auth, requireRootAdmin, async (req, res) => {
 });
 
 // Approve/reject change request
-router.put('/change-requests/:requestId', auth, requireRootAdmin, async (req, res) => {
+router.put('/change-requests/:requestId', auth.requireAuth, requireRootAdmin, async (req, res) => {
   try {
     const { requestId } = req.params;
     const { status, adminNotes } = req.body;
@@ -253,7 +253,7 @@ router.put('/change-requests/:requestId', auth, requireRootAdmin, async (req, re
 });
 
 // Approve/reject order request
-router.put('/order-requests/:requestId', auth, requireRootAdmin, async (req, res) => {
+router.put('/order-requests/:requestId', auth.requireAuth, requireRootAdmin, async (req, res) => {
   try {
     const { requestId } = req.params;
     const { status, adminNotes } = req.body;
