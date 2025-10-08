@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Supplier = require('../models/Supplier');
+const { requireAuth } = require('../middleware/auth');
 
 // Create a new supplier
 router.post('/', async (req, res) => {
@@ -12,8 +13,6 @@ router.post('/', async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 });
-
-const { requireAuth } = require('../middleware/auth');
 
 // Get all suppliers for logged-in user
 router.get('/', requireAuth, async (req, res) => {
