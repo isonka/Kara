@@ -28,7 +28,7 @@ const requireTeamMember = async (req, res, next) => {
 };
 
 // Get recipes (read-only for team members)
-router.get('/recipes', auth, requireTeamMember, async (req, res) => {
+router.get('/recipes', auth.requireAuth, requireTeamMember, async (req, res) => {
   try {
     if (!req.teamMember.permissions.canViewRecipes) {
       return res.status(403).json({ message: 'Permission denied' });
@@ -46,7 +46,7 @@ router.get('/recipes', auth, requireTeamMember, async (req, res) => {
 });
 
 // Get ingredients (read-only for team members)
-router.get('/ingredients', auth, requireTeamMember, async (req, res) => {
+router.get('/ingredients', auth.requireAuth, requireTeamMember, async (req, res) => {
   try {
     if (!req.teamMember.permissions.canViewIngredients) {
       return res.status(403).json({ message: 'Permission denied' });
@@ -63,7 +63,7 @@ router.get('/ingredients', auth, requireTeamMember, async (req, res) => {
 });
 
 // Submit change request for recipe
-router.post('/change-requests/recipe', auth, requireTeamMember, async (req, res) => {
+router.post('/change-requests/recipe', auth.requireAuth, requireTeamMember, async (req, res) => {
   try {
     if (!req.teamMember.permissions.canRecommendChanges) {
       return res.status(403).json({ message: 'Permission denied' });
@@ -112,7 +112,7 @@ router.post('/change-requests/recipe', auth, requireTeamMember, async (req, res)
 });
 
 // Submit change request for ingredient
-router.post('/change-requests/ingredient', auth, requireTeamMember, async (req, res) => {
+router.post('/change-requests/ingredient', auth.requireAuth, requireTeamMember, async (req, res) => {
   try {
     if (!req.teamMember.permissions.canRecommendChanges) {
       return res.status(403).json({ message: 'Permission denied' });
@@ -161,7 +161,7 @@ router.post('/change-requests/ingredient', auth, requireTeamMember, async (req, 
 });
 
 // Submit order request
-router.post('/order-requests', auth, requireTeamMember, async (req, res) => {
+router.post('/order-requests', auth.requireAuth, requireTeamMember, async (req, res) => {
   try {
     if (!req.teamMember.permissions.canAddToOrders) {
       return res.status(403).json({ message: 'Permission denied' });
@@ -217,7 +217,7 @@ router.post('/order-requests', auth, requireTeamMember, async (req, res) => {
 });
 
 // Get my change requests
-router.get('/my-change-requests', auth, requireTeamMember, async (req, res) => {
+router.get('/my-change-requests', auth.requireAuth, requireTeamMember, async (req, res) => {
   try {
     const changeRequests = await ChangeRequest.find({
       submittedBy: req.teamMember._id
@@ -234,7 +234,7 @@ router.get('/my-change-requests', auth, requireTeamMember, async (req, res) => {
 });
 
 // Get my order requests
-router.get('/my-order-requests', auth, requireTeamMember, async (req, res) => {
+router.get('/my-order-requests', auth.requireAuth, requireTeamMember, async (req, res) => {
   try {
     const orderRequests = await OrderRequest.find({
       submittedBy: req.teamMember._id
@@ -252,7 +252,7 @@ router.get('/my-order-requests', auth, requireTeamMember, async (req, res) => {
 });
 
 // Get user profile
-router.get('/profile', auth, requireTeamMember, async (req, res) => {
+router.get('/profile', auth.requireAuth, requireTeamMember, async (req, res) => {
   try {
     const user = await User.findById(req.teamMember._id)
       .select('-password')
@@ -267,7 +267,7 @@ router.get('/profile', auth, requireTeamMember, async (req, res) => {
 });
 
 // Update profile
-router.put('/profile', auth, requireTeamMember, async (req, res) => {
+router.put('/profile', auth.requireAuth, requireTeamMember, async (req, res) => {
   try {
     const { firstName, lastName } = req.body;
 

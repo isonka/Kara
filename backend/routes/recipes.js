@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 const Recipe = require('../models/Recipe');
 const Ingredient = require('../models/Ingredient');
-const { requireAuth } = require('../middleware/auth');
+const auth = require('../middleware/auth');
 
 // Get all recipes for the logged-in user
-router.get('/', requireAuth, async (req, res) => {
+router.get('/', auth.requireAuth, async (req, res) => {
   try {
     const userId = req.user.userId || req.user._id;
     const recipes = await Recipe.find({ user: userId })
@@ -21,7 +21,7 @@ router.get('/', requireAuth, async (req, res) => {
 });
 
 // Get recipes by category
-router.get('/category/:category', requireAuth, async (req, res) => {
+router.get('/category/:category', auth.requireAuth, async (req, res) => {
   try {
     const userId = req.user.userId || req.user._id;
     const recipes = await Recipe.find({ 
@@ -38,7 +38,7 @@ router.get('/category/:category', requireAuth, async (req, res) => {
 });
 
 // Create a new recipe
-router.post('/', requireAuth, async (req, res) => {
+router.post('/', auth.requireAuth, async (req, res) => {
   try {
     const userId = req.user.userId || req.user._id;
     
@@ -73,7 +73,7 @@ router.post('/', requireAuth, async (req, res) => {
 });
 
 // Get a single recipe
-router.get('/:id', requireAuth, async (req, res) => {
+router.get('/:id', auth.requireAuth, async (req, res) => {
   try {
     const userId = req.user.userId || req.user._id;
     const recipe = await Recipe.findOne({ 
@@ -94,7 +94,7 @@ router.get('/:id', requireAuth, async (req, res) => {
 });
 
 // Update a recipe
-router.put('/:id', requireAuth, async (req, res) => {
+router.put('/:id', auth.requireAuth, async (req, res) => {
   try {
     const userId = req.user.userId || req.user._id;
     
@@ -130,7 +130,7 @@ router.put('/:id', requireAuth, async (req, res) => {
 });
 
 // Delete a recipe
-router.delete('/:id', requireAuth, async (req, res) => {
+router.delete('/:id', auth.requireAuth, async (req, res) => {
   try {
     const userId = req.user.userId || req.user._id;
     const recipe = await Recipe.findOneAndDelete({ 
@@ -148,7 +148,7 @@ router.delete('/:id', requireAuth, async (req, res) => {
 });
 
 // Calculate recipe cost
-router.get('/:id/cost', requireAuth, async (req, res) => {
+router.get('/:id/cost', auth.requireAuth, async (req, res) => {
   try {
     const userId = req.user.userId || req.user._id;
     const recipe = await Recipe.findOne({ 
@@ -194,7 +194,7 @@ router.get('/:id/cost', requireAuth, async (req, res) => {
 });
 
 // Get recipe categories
-router.get('/meta/categories', requireAuth, async (req, res) => {
+router.get('/meta/categories', auth.requireAuth, async (req, res) => {
   try {
     const userId = req.user.userId || req.user._id;
     const categories = await Recipe.distinct('category', { user: userId });
