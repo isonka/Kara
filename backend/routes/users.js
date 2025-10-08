@@ -24,7 +24,7 @@ const requireRootAdmin = async (req, res, next) => {
 };
 
 // Get all team members for the root admin's membership
-router.get('/team', auth, requireRootAdmin, async (req, res) => {
+router.get('/team', auth.requireAuth, requireRootAdmin, async (req, res) => {
   try {
     const teamMembers = await User.find({
       membershipId: req.rootAdmin.membershipId,

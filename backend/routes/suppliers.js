@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Supplier = require('../models/Supplier');
-const { requireAuth } = require('../middleware/auth');
+const auth = require('../middleware/auth');
 
 // Create a new supplier
 router.post('/', async (req, res) => {
@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
 });
 
 // Get all suppliers for logged-in user
-router.get('/', requireAuth, async (req, res) => {
+router.get('/', auth.requireAuth, async (req, res) => {
   try {
     // The JWT token has userId, not _id
     const userId = req.user.userId || req.user._id;
